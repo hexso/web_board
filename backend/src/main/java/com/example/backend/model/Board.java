@@ -12,6 +12,9 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import lombok.Getter;
+
+@Getter
 @Entity
 @Table(name = "board")
 @DynamicInsert
