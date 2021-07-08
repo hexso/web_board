@@ -20,4 +20,8 @@ public class BoardService {
 		return boardRepository.findAll();
 	}
 
+    public Board createBoard(Board board) {
+        return boardRepository.save(board);
+    }
+
 }
