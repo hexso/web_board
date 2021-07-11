@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.Board;
@@ -29,9 +30,10 @@ public class BoardController {
 
 	// get all board 
 	@GetMapping("/board")
-	public List<Board> getAllBoards() {
+	public ResponseEntity<Map> getAllBoards(@RequestParam(value = "p_num", required=false) Integer p_num) {
+		if (p_num == null || p_num <= 0) p_num = 1;
 		
-		return boardService.getAllBoard();
+		return boardService.getPagingBoard(p_num);
 	}
 
     @PostMapping("/board")
