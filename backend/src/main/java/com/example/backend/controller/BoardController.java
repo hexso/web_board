@@ -43,23 +43,23 @@ public class BoardController {
 
 	@GetMapping("/board/{no}")
 	public ResponseEntity<Board> getBoardByNo(
-			@PathVariable Integer no) {
+			@PathVariable Integer id) {
 		
-		return boardService.getBoard(no);
+		return boardService.getBoard(id);
 	}
 
 	@PutMapping("/board/{no}")
 	public ResponseEntity<Board> updateBoardByNo(
-			@PathVariable Integer no, @RequestBody Board board){
+			@PathVariable Integer id, @RequestBody Board board){
 		
-		return boardService.updateBoard(no, board);
+		return boardService.updateBoard(id, board);
 	}
 
 	@DeleteMapping("/board/{no}")
 	public ResponseEntity<Map<String, Boolean>> deleteBoardByNo(
-			@PathVariable Integer no) {
+			@PathVariable Integer id) {
 		
-		return boardService.deleteBoard(no);
+		return boardService.deleteBoard(id);
 	}
 
 }

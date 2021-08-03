@@ -55,16 +55,16 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
-	public ResponseEntity<Board> getBoard(Integer no) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
+	public ResponseEntity<Board> getBoard(Integer id) {
+		Board board = boardRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
 		return ResponseEntity.ok(board);
 	}
 
 	public ResponseEntity<Board> updateBoard(
-			Integer no, Board updatedBoard) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
+			Integer id, Board updatedBoard) {
+		Board board = boardRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
 		board.setType(updatedBoard.getType());
 		board.setTitle(updatedBoard.getTitle());
 		board.setContents(updatedBoard.getContents());
@@ -75,13 +75,13 @@ public class BoardService {
 	}
 
 	public ResponseEntity<Map<String, Boolean>> deleteBoard(
-			Integer no) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
+			Integer id) {
+		Board board = boardRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
 		
 		boardRepository.delete(board);
 		Map<String, Boolean> response = new HashMap<>();
-		response.put("Deleted Board Data by id : ["+no+"]", Boolean.TRUE);
+		response.put("Deleted Board Data by id : ["+id+"]", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
 

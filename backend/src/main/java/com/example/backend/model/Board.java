@@ -18,27 +18,21 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "board")
+@Table(name = "posts")
 @DynamicInsert
 @DynamicUpdate
 public class Board {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer no;
-	
-	@Column(name = "type")
-	private String type;
+	private Integer id;
 	
 	@Column(name = "title")
 	private String title;
 	
 	@Column(name = "contents")
 	private String contents;
-	
-	@Column(name = "member")
-	private String member;
-	
+		
 	@Column(name = "created_time")
 	private Date createdTime;
 	
@@ -47,9 +41,15 @@ public class Board {
 	
 	@Column(name = "likes")
 	private Integer likes;
-	
-	@Column(name = "counts")
-	private Integer counts;
+
+	@Column(name = "readcnt")
+	private Integer readcnt;
+
+	@Column(name = "type")
+	private String type;
+
+	@Column(name = "author_id")
+	private Integer author_id;
 
 // ---Getter/Setter ---
 
