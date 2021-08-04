@@ -7,11 +7,9 @@ import {
   Col,
   Card,
   CardBody,
-  CardFooter,
-  Badge,
-  Button
+  CardFooter
 } from "shards-react";
-
+import BoardService from '../service/BoardService';
 import PageTitle from "../components/common/PageTitle";
 
 class BlogPosts extends React.Component {
@@ -19,74 +17,41 @@ class BlogPosts extends React.Component {
     super(props);
 
     this.state = {
-      // First list of posts.
-      PostsListOne: [
-        {
-          backgroundImage: require("../images/content-management/1.jpeg"),
-          category: "Business",
-          categoryTheme: "dark",
-          author: "Anna Kunis",
-          authorAvatar: require("../images/avatars/1.jpg"),
-          title: "Conduct at an replied removal an amongst",
-          body:
-            "However venture pursuit he am mr cordial. Forming musical am hearing studied be luckily. But in for determine what would see...",
-          date: "28 February 2019"
-        }
-      ],
-
-      // Second list of posts.
-      PostsListTwo: [
-        {
-          backgroundImage: require("../images/content-management/5.jpeg"),
-          category: "Travel",
-          categoryTheme: "info",
-          author: "Anna Ken",
-          authorAvatar: require("../images/avatars/0.jpg"),
-          title:
-            "Attention he extremity unwilling on otherwise cars backwards yet",
-          body:
-            "Conviction up partiality as delightful is discovered. Yet jennings resolved disposed exertion you off. Left did fond drew fat head poor jet pan flying over...",
-          date: "29 February 2019"
-        }
-      ],
-
-      // Third list of posts.
-      PostsListThree: [
-        {
-          author: "John James",
-          authorAvatar: require("../images/avatars/1.jpg"),
-          title: "Had denoting properly jointure which well books beyond",
-          body:
-            "In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer wisdom work...",
-          date: "29 February 2019"
-        }
-      ],
-
-      // Fourth list of posts.
-      PostsListFour: [
-        {
-          backgroundImage: require("../images/content-management/7.jpeg"),
-          author: "Alene Trenton",
-          authorUrl: "#",
-          category: "News",
-          categoryUrl: "#",
-          title: "Extremity so attending objection as engrossed",
-          body:
-            "Pursuit chamber as elderly amongst on. Distant however warrant farther to of. My justice wishing prudent waiting in be...",
-          date: "29 February 2019"
-        }
-      ]
+      p_num:1,
+      paging:{},
+      posts:[],
+      image_url:'null'
     };
+  }
+  componentDidMount(){
+    BoardService.getBoards(this.state.p_num).then((res) => {
+      this.setState({ 
+          p_num: res.data.pagingData.currentPageNum,
+          paging: res.data.pagingData,
+          posts: res.data.list});
+    });
+  }
+
+  listBoard(p_num){
+    console.log("pageNum : "+ p_num);
+    BoardService.getBoards(p_num).then((res) => {
+        console.log(res.data);
+        this.setState({ 
+            p_num: res.data.pagingData.currentPageNum,
+            paging: res.data.pagingData,
+            posts: res.data.list});
+    });
+  }
+
+  getPreImage(multimediaList){
+    if (multimediaList.length === 0){
+      return null;
+    }else{
+      return multimediaList[0].url
+    }
   }
 
   render() {
-    const {
-      PostsListOne,
-      PostsListTwo,
-      PostsListThree,
-      PostsListFour
-    } = this.state;
-
     return (
       <Container fluid className="main-content-container px-4">
         {/* Page Header */}
@@ -96,28 +61,13 @@ class BlogPosts extends React.Component {
 
         {/* First Row of Posts */}
         <Row>
-          {PostsListOne.map((post, idx) => (
+          {this.state.posts.map((post, idx) => (
             <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-              <Card small className="card-post card-post--1">
+              <Card small className="card-post h-100">
                 <div
                   className="card-post__image"
-                  style={{ backgroundImage: `url(${post.backgroundImage})` }}
+                  style={{ backgroundImage: `url(${this.getPreImage(post.multimediaSet)})` }}
                 >
-                  <Badge
-                    pill
-                    className={`card-post__category bg-${post.categoryTheme}`}
-                  >
-                    {post.category}
-                  </Badge>
-                  <div className="card-post__author d-flex">
-                    <a
-                      href="#"
-                      className="card-post__author-avatar card-post__author-avatar--small"
-                      style={{ backgroundImage: `url('${post.authorAvatar}')` }}
-                    >
-                      Written by {post.author}
-                    </a>
-                  </div>
                 </div>
                 <CardBody>
                   <h5 className="card-title">
@@ -125,115 +75,17 @@ class BlogPosts extends React.Component {
                       {post.title}
                     </a>
                   </h5>
-                  <p className="card-text d-inline-block mb-3">{post.body}</p>
-                  <span className="text-muted">{post.date}</span>
-                </CardBody>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Second Row of Posts */}
-        <Row>
-          {PostsListTwo.map((post, idx) => (
-            <Col lg="6" sm="12" className="mb-4" key={idx}>
-              <Card small className="card-post card-post--aside card-post--1">
-                <div
-                  className="card-post__image"
-                  style={{ backgroundImage: `url('${post.backgroundImage}')` }}
-                >
-                  <Badge
-                    pill
-                    className={`card-post__category bg-${post.categoryTheme}`}
-                  >
-                    {post.category}
-                  </Badge>
-                  <div className="card-post__author d-flex">
-                    <a
-                      href="#"
-                      className="card-post__author-avatar card-post__author-avatar--small"
-                      style={{ backgroundImage: `url('${post.authorAvatar}')` }}
-                    >
-                      Written by Anna Ken
-                    </a>
-                  </div>
-                </div>
-                <CardBody>
-                  <h5 className="card-title">
-                    <a className="text-fiord-blue" href="#">
-                      {post.title}
-                    </a>
-                  </h5>
-                  <p className="card-text d-inline-block mb-3">{post.body}</p>
-                  <span className="text-muted">{post.date}</span>
-                </CardBody>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Third Row of Posts */}
-        <Row>
-          {PostsListThree.map((post, idx) => (
-            <Col lg="4" key={idx}>
-              <Card small className="card-post mb-4">
-                <CardBody>
-                  <h5 className="card-title">{post.title}</h5>
-                  <p className="card-text text-muted">{post.body}</p>
-                </CardBody>
-                <CardFooter className="border-top d-flex">
-                  <div className="card-post__author d-flex">
-                    <a
-                      href="#"
-                      className="card-post__author-avatar card-post__author-avatar--small"
-                      style={{ backgroundImage: `url('${post.authorAvatar}')` }}
-                    >
-                      Written by James Khan
-                    </a>
-                    <div className="d-flex flex-column justify-content-center ml-3">
-                      <span className="card-post__author-name">
-                        {post.author}
-                      </span>
-                      <small className="text-muted">{post.date}</small>
-                    </div>
-                  </div>
-                  <div className="my-auto ml-auto">
-                    <Button size="sm" theme="white">
-                      <i className="far fa-bookmark mr-1" /> Bookmark
-                    </Button>
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        {/* Fourth Row of posts */}
-        <Row>
-          {PostsListFour.map((post, idx) => (
-            <Col lg="3" md="6" sm="12" className="mb-4" key={idx}>
-              <Card small className="card-post h-100">
-                <div
-                  className="card-post__image"
-                  style={{ backgroundImage: `url('${post.backgroundImage}')` }}
-                />
-                <CardBody>
-                  <h5 className="card-title">
-                    <a className="text-fiord-blue" href="#">
-                      {post.title}
-                    </a>
-                  </h5>
-                  <p className="card-text">{post.body}</p>
+                  <span className="text-muted">{post.updatedTime}</span>
                 </CardBody>
                 <CardFooter className="text-muted border-top py-3">
                   <span className="d-inline-block">
-                    By
+                    By{"  "}
                     <a className="text-fiord-blue" href={post.authorUrl}>
-                      {post.author}
+                      {post.user.nickName}
                     </a>{" "}
                     in
                     <a className="text-fiord-blue" href={post.categoryUrl}>
-                      {post.category}
+                      {post.postType}
                     </a>
                   </span>
                 </CardFooter>
