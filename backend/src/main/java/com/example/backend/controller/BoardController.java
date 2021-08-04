@@ -1,6 +1,5 @@
 package com.example.backend.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.model.Board;
+import com.example.backend.model.Post;
 import com.example.backend.service.BoardService;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -37,22 +36,22 @@ public class BoardController {
 	}
 
     @PostMapping("/board")
-    public Board createBoard(@RequestBody Board board){
-        return boardService.createBoard(board);
+    public Post createBoard(@RequestBody Post post){
+        return boardService.createBoard(post);
     }
 
 	@GetMapping("/board/{no}")
-	public ResponseEntity<Board> getBoardByNo(
+	public ResponseEntity<Post> getBoardByNo(
 			@PathVariable Integer id) {
 		
 		return boardService.getBoard(id);
 	}
 
 	@PutMapping("/board/{no}")
-	public ResponseEntity<Board> updateBoardByNo(
-			@PathVariable Integer id, @RequestBody Board board){
+	public ResponseEntity<Post> updateBoardByNo(
+			@PathVariable Integer id, @RequestBody Post post){
 		
-		return boardService.updateBoard(id, board);
+		return boardService.updateBoard(id, post);
 	}
 
 	@DeleteMapping("/board/{no}")

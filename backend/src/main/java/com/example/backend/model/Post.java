@@ -1,19 +1,15 @@
 package com.example.backend.model;
 
-import java.util.Date;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.annotation.Order;
 
 @Setter
 @Getter
@@ -21,12 +17,21 @@ import lombok.Setter;
 @Table(name = "posts")
 @DynamicInsert
 @DynamicUpdate
-public class Board {
+public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
+	@OneToMany
+	@JoinColumn(name = "post_id")
+	Set<Multimedia> multimediaSet = new HashSet<>();
+
+	@OneToMany
+	@OrderBy(value = "updated_time DESC")
+	@JoinColumn(name = "post_id")
+	List<Comment> commentSet = new ArrayList<>();
+
 	@Column(name = "title")
 	private String title;
 	
@@ -46,10 +51,11 @@ public class Board {
 	private Integer readcnt;
 
 	@Column(name = "type")
-	private String type;
+	private String postType;
 
-	@Column(name = "author_id")
-	private Integer author_id;
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User user;
 
 // ---Getter/Setter ---
 

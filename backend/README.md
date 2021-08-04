@@ -30,6 +30,9 @@ CREATE TABLE IF NOT EXISTS `test`.`comments` (
   `contents` VARCHAR(256) NOT NULL,
   `author_id` INT NOT NULL,
   `post_id` INT NOT NULL,
+
+`updated_time` DATETIME NOT NULL DEFAULT now(),
+
   PRIMARY KEY (`id`),
   INDEX `author_id_idx` (`author_id` ASC),
   INDEX `post_id_idx` (`post_id` ASC),
