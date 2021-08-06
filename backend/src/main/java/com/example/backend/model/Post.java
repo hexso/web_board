@@ -1,44 +1,43 @@
 package com.example.backend.model;
 
-import java.util.Date;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.annotation.Order;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "board")
+@Table(name = "posts")
 @DynamicInsert
 @DynamicUpdate
-public class Board {
+public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer no;
-	
-	@Column(name = "type")
-	private String type;
-	
+	private Integer id;
+
+	@OneToMany
+	@JoinColumn(name = "post_id")
+	Set<Multimedia> multimediaSet = new HashSet<>();
+
+	@OneToMany
+	@OrderBy(value = "updated_time DESC")
+	@JoinColumn(name = "post_id")
+	List<Comment> commentSet = new ArrayList<>();
+
 	@Column(name = "title")
 	private String title;
 	
 	@Column(name = "contents")
 	private String contents;
-	
-	@Column(name = "member")
-	private String member;
-	
+		
 	@Column(name = "created_time")
 	private Date createdTime;
 	
@@ -47,9 +46,16 @@ public class Board {
 	
 	@Column(name = "likes")
 	private Integer likes;
-	
-	@Column(name = "counts")
-	private Integer counts;
+
+	@Column(name = "readcnt")
+	private Integer readcnt;
+
+	@Column(name = "type")
+	private String postType;
+
+	@ManyToOne
+	@JoinColumn(name = "author_id")
+	private User user;
 
 // ---Getter/Setter ---
 

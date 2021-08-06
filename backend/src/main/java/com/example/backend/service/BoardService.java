@@ -9,18 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Board;
-import com.example.backend.model.BoardRepository;
+import com.example.backend.model.Post;
+import com.example.backend.model.PostRepository;
 import com.example.backend.util.PagingUtil;
 
 @Service
 public class BoardService {
 
 	@Autowired
-	private BoardRepository boardRepository;
+	private PostRepository postRepository;
 	
 	public int findAllCount() {
-		return (int) boardRepository.count();
+		return (int) postRepository.count();
 	}
 
 	// get paging boards data
@@ -28,7 +28,7 @@ public class BoardService {
 		Map result = null;
 		
 		PagingUtil pu = new PagingUtil(p_num, 5, 5); // ($1:표시할 현재 페이지, $2:한페이지에 표시할 글 수, $3:한 페이지에 표시할 페이지 버튼의 수 )
-		List<Board> list = boardRepository.findFromTo(pu.getObjectStartNum(), pu.getObjectCountPerPage());
+		List<Post> list = postRepository.findFromTo(pu.getObjectStartNum(), pu.getObjectCountPerPage());
 		pu.setObjectCountTotal(findAllCount());
 		pu.setCalcForPaging();
 		
@@ -47,41 +47,41 @@ public class BoardService {
 	}
 
 	// get boards data
-	public List<Board> getAllBoard() {
-		return boardRepository.findAll();
+	public List<Post> getAllBoard() {
+		return postRepository.findAll();
 	}
 
-    public Board createBoard(Board board) {
-        return boardRepository.save(board);
+    public Post createBoard(Post post) {
+        return postRepository.save(post);
     }
 
-	public ResponseEntity<Board> getBoard(Integer no) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
-		return ResponseEntity.ok(board);
+	public ResponseEntity<Post> getBoard(Integer id) {
+		Post post = postRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
+		return ResponseEntity.ok(post);
 	}
 
-	public ResponseEntity<Board> updateBoard(
-			Integer no, Board updatedBoard) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
-		board.setType(updatedBoard.getType());
-		board.setTitle(updatedBoard.getTitle());
-		board.setContents(updatedBoard.getContents());
-		board.setUpdatedTime(new Date());
+	public ResponseEntity<Post> updateBoard(
+			Integer id, Post updatedPost) {
+		Post post = postRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
+		post.setPostType(updatedPost.getPostType());
+		post.setTitle(updatedPost.getTitle());
+		post.setContents(updatedPost.getContents());
+		post.setUpdatedTime(new Date());
 		
-		Board endUpdatedBoard = boardRepository.save(board);
-		return ResponseEntity.ok(endUpdatedBoard);
+		Post endUpdatedPost = postRepository.save(post);
+		return ResponseEntity.ok(endUpdatedPost);
 	}
 
 	public ResponseEntity<Map<String, Boolean>> deleteBoard(
-			Integer no) {
-		Board board = boardRepository.findById(no)
-				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+no+"]"));
+			Integer id) {
+		Post post = postRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
 		
-		boardRepository.delete(board);
+		postRepository.delete(post);
 		Map<String, Boolean> response = new HashMap<>();
-		response.put("Deleted Board Data by id : ["+no+"]", Boolean.TRUE);
+		response.put("Deleted Board Data by id : ["+id+"]", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
 
