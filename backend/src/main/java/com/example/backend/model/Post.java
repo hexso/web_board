@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.sun.istack.NotNull;
+import lombok.NonNull;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -58,5 +60,4 @@ public class Post {
 	private User user;
 
 // ---Getter/Setter ---
-
 }

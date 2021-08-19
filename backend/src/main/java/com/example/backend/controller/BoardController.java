@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import java.util.Map;
 
+import com.example.backend.model.PostForCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,8 +37,8 @@ public class BoardController {
 	}
 
     @PostMapping("/board")
-    public Post createBoard(@RequestBody Post post){
-        return boardService.createBoard(post);
+    public Post createBoard(@RequestBody PostForCreate post){
+		return boardService.createBoard(post);
     }
 
 	@GetMapping("/board/{no}")

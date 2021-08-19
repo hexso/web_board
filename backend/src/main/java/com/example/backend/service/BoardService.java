@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.Post;
-import com.example.backend.model.PostRepository;
 import com.example.backend.util.PagingUtil;
 
 @Service
@@ -18,6 +17,9 @@ public class BoardService {
 
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	public int findAllCount() {
 		return (int) postRepository.count();
@@ -51,8 +53,15 @@ public class BoardService {
 		return postRepository.findAll();
 	}
 
-    public Post createBoard(Post post) {
-        return postRepository.save(post);
+    public Post createBoard(PostForCreate post) {
+		User user = userRepository.getOne(post.getAuthorId());
+		System.out.println(user.getNickName());
+		Post realPost = new Post();
+		realPost.setPostType(post.getPostType());
+		realPost.setContents(post.getContents());
+		realPost.setTitle(post.getTitle());
+		realPost.setUser(user);
+		return postRepository.save(realPost);
     }
 
 	public ResponseEntity<Post> getBoard(Integer id) {
