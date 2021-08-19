@@ -14,7 +14,7 @@ import {
 const SidebarActions = (props) => (
   <Card small className="mb-3">
     <CardHeader className="border-bottom">
-      <h6 className="m-0">카테고리</h6>
+      <h6 className="m-0">글쓰기</h6>
     </CardHeader>
 
     <CardBody className="p-0">

@@ -12,7 +12,7 @@ class AddNewPost extends Component {
     super(props);
         this.state = {
             no: 1,
-            postType: '',
+            postType: 'Photo',
             title: '',
             contents: '',
             authorId: 1
