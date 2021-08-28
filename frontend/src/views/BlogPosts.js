@@ -51,6 +51,10 @@ class BlogPosts extends React.Component {
     }
   }
 
+  readBoard(no){
+    this.props.history.push(`/read-post/${no}`);
+  }
+
   render() {
     return (
       <Container fluid className="main-content-container px-4">
@@ -72,7 +76,7 @@ class BlogPosts extends React.Component {
                 <CardBody>
                   <h5 className="card-title">
                     <a href="#" className="text-fiord-blue">
-                      {post.title}
+                      <td> <a onClick = {() => this.readBoard(post.id)}>{post.title} </a></td>
                     </a>
                   </h5>
                   <span className="text-muted">{post.updatedTime}</span>
