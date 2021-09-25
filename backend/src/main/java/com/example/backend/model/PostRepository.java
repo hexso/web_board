@@ -14,6 +14,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 			+ "author_id,"
 			+ "created_time,"
 			+ "updated_time,"
+			+ "top_image_url,"
 			+ "likes,"
 			+ "readcnt"
 			+ " FROM posts WHERE 0 < id "

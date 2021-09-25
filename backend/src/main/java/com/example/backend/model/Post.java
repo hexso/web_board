@@ -55,6 +55,9 @@ public class Post {
 	@Column(name = "type")
 	private String postType;
 
+	@Column(name = "top_image_url")
+	private String topImageUrl;
+
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private User user;

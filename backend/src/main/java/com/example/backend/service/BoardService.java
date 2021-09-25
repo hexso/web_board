@@ -61,6 +61,7 @@ public class BoardService {
 		realPost.setContents(post.getContents());
 		realPost.setTitle(post.getTitle());
 		realPost.setUser(user);
+		realPost.setTopImageUrl(post.getImageUrl());
 		return postRepository.save(realPost);
     }
 

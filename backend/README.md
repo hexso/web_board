@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `test`.`posts` (
   `likes` INT NULL DEFAULT 0,
   `readcnt` INT NULL DEFAULT 0,
   `type` VARCHAR(32) NULL,
+  `top_image_url` VARCHAR(512) NULL DEFAULT NULL,
   `author_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `author_id_idx` (`author_id` ASC),

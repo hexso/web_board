@@ -1,23 +1,20 @@
 package com.example.backend.controller;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
+import com.example.backend.model.Multimedia;
 import com.example.backend.model.PostForCreate;
+import com.example.backend.service.MultimediaService;
+import com.example.backend.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.model.Post;
 import com.example.backend.service.BoardService;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -27,6 +24,11 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private MultimediaService multimediaService;
+
+	@Autowired
+	private S3Service s3Service;
 
 	// get all board 
 	@GetMapping("/board")
@@ -37,15 +39,34 @@ public class BoardController {
 	}
 
     @PostMapping("/board")
-    public Post createBoard(@RequestBody PostForCreate post){
-		return boardService.createBoard(post);
+    public Post createBoard(@RequestPart("file") MultipartFile file, @RequestPart("body") PostForCreate post) throws IOException {
+		MultipartFile multipartFile = file;
+		String url = "";
+		if (multipartFile != null) {
+			String fileName = multipartFile.getOriginalFilename();
+			Date time = new Date();
+			String nowTime = time.toString();
+			fileName += nowTime;
+
+			url = s3Service.upload(multipartFile, fileName);
+		}
+		post.setImageUrl(url);
+		Post after_post = boardService.createBoard(post);
+		if (multipartFile != null) {
+			Multimedia multimedia = new Multimedia();
+			multimedia.setPostId(after_post.getId());
+			multimedia.setType(multipartFile.getContentType().toString());
+			multimedia.setUrl(url);
+			multimediaService.createMultimedia(multimedia);
+		}
+		return after_post;
     }
 
 	@GetMapping("/board/{no}")
 	public ResponseEntity<Post> getBoardByNo(
-			@PathVariable Integer id) {
+			@PathVariable Integer no) {
 		
-		return boardService.getBoard(id);
+		return boardService.getBoard(no);
 	}
 
 	@PutMapping("/board/{no}")
