@@ -9,7 +9,7 @@ class BoardService {
     }
 
     createBoard(board) {
-        return axios.post(BOARD_API_BASE_URL,board);
+        return axios.post(BOARD_API_BASE_URL,board, { headers: {"Content-Type": "multipart/form-data"} });
     }
 
     getOneBoard(no) {

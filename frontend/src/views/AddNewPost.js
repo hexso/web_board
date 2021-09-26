@@ -15,7 +15,8 @@ class AddNewPost extends Component {
             postType: 'Photo',
             title: '',
             contents: '',
-            authorId: 1
+            authorId: 1,
+            file : ''
         }
 
         this.changeTitleHandler = this.changeTitleHandler.bind(this);
@@ -25,13 +26,18 @@ class AddNewPost extends Component {
     }
 
     createPostHandler = (event) => {
+      const FormData = require('form-data');
+      const form = new FormData();
       let board = {
-        postType: this.state.postType,
-        title: this.state.title,
-        contents: this.state.contents,
-        authorId: this.state.authorId
+          postType: this.state.postType,
+          title: this.state.title,
+          contents: this.state.contents,
+          authorId: this.state.authorId
       };
-      BoardService.createBoard(board).then(res => {
+      
+      form.append('file',this.state.file);
+      form.append('body', new Blob([JSON.stringify(board)],{ type: "application/json" }));
+      BoardService.createBoard(form).then(res => {
         this.props.history.push('/blog-posts');
       });
     }
@@ -48,6 +54,14 @@ class AddNewPost extends Component {
       this.setState({contents: value});
     }
 
+    changeFileHandler = event => {
+      const files = event.target.files[0];
+      console.log(files);
+      this.setState({
+        file: files
+      });
+    };
+
     render() {return (
       <Container fluid className="main-content-container px-4 pb-4">
         {/* Page Header */}
@@ -58,7 +72,7 @@ class AddNewPost extends Component {
         <Row>
           {/* Editor */}
           <Col lg="9" md="12">
-            <Editor handler={[this.changeTitleHandler, this.changeContentsHandler]}/>
+            <Editor handler={[this.changeTitleHandler, this.changeContentsHandler, this.changeFileHandler]}/>
           </Col>
 
           {/* Sidebar Widgets */}
