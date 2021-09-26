@@ -39,7 +39,7 @@ public class BoardController {
 	}
 
     @PostMapping("/board")
-    public Post createBoard(@RequestPart("file") MultipartFile file, @RequestPart("body") PostForCreate post) throws IOException {
+    public Post createBoard(@RequestPart(value = "file", required=false) MultipartFile file, @RequestPart("body") PostForCreate post) throws IOException {
 		MultipartFile multipartFile = file;
 		String url = "";
 		if (multipartFile != null) {
