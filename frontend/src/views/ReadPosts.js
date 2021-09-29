@@ -8,7 +8,7 @@ import {
   CardFooter
 } from "shards-react";
 import BoardService from '../service/BoardService';
-
+import SingleComment from './components/SingleComment';
 class ReadPosts extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +16,8 @@ class ReadPosts extends Component {
 
         this.state = { 
             no: this.props.match.params.no,
-            board: {}
+            board: {},
+            comments:[{}]
         }
         
         this.goToUpdate = this.goToUpdate.bind(this);
@@ -90,7 +91,16 @@ class ReadPosts extends Component {
                                 <label> Member  </label>: 
                                 {this.state.board.member}
                             </div>
-
+                            <div>
+                                댓글
+                            </div>
+                            <ul id='comments'>
+                                {
+                                    this.state.comments.map(comment=>{
+                                        return <SingleComment key={comment.uuid} comment={comment}/>
+                                    })
+                                }
+                            </ul>
                             {this.returnDate(this.state.board.createdTime, this.state.board.updatedTime) }
                             <button className="btn btn-primary" onClick={this.goToList.bind(this)} style={{marginLeft:"10px"}}>글 목록으로 이동</button>
                             <button className="btn btn-info" onClick={this.goToUpdate} style={{marginLeft:"10px"}}>글 수정</button>
