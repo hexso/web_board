@@ -20,6 +20,9 @@ public class BoardService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	public int findAllCount() {
 		return (int) postRepository.count();
@@ -95,4 +98,7 @@ public class BoardService {
 		return ResponseEntity.ok(response);
 	}
 
+	public Comment addComment(Comment comment){
+		return commentRepository.save(comment);
+	}
 }

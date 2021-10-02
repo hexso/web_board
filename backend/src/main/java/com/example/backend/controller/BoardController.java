@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
+import com.example.backend.model.Comment;
 import com.example.backend.model.Multimedia;
 import com.example.backend.model.PostForCreate;
 import com.example.backend.service.MultimediaService;
@@ -83,4 +84,8 @@ public class BoardController {
 		return boardService.deleteBoard(id);
 	}
 
+	@PostMapping("/comment")
+	public Comment addComment(@RequestBody Comment comment){
+		return boardService.addComment(comment);
+	}
 }
