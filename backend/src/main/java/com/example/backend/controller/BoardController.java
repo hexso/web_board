@@ -83,9 +83,4 @@ public class BoardController {
 		
 		return boardService.deleteBoard(id);
 	}
-
-	@PostMapping("/comment")
-	public Comment addComment(@RequestBody Comment comment){
-		return boardService.addComment(comment);
-	}
 }
