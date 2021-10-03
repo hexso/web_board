@@ -10,22 +10,20 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
-@Table(name = "comments")
+@Table(name= "users")
 @DynamicInsert
 @DynamicUpdate
-public class Comment {
-
+public class UserPublic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "contents")
-    private String contents;
+    @Column(name = "username")
+    private String userName;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private UserPublic user;
+    @Column(name = "nickname")
+    private String nickName;
 
-    @Column(name = "post_id")
-    private Integer postId;
+    @Column(name = "profile_url")
+    private String profileUrl;
 }

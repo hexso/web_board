@@ -57,7 +57,7 @@ public class BoardService {
 	}
 
     public Post createBoard(PostForCreate post) {
-		User user = userRepository.getOne(post.getAuthorId());
+		UserPublic user = userRepository.getOne(post.getAuthorId());
 		System.out.println(user.getNickName());
 		Post realPost = new Post();
 		realPost.setPostType(post.getPostType());
