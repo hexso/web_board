@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.backend.dto.UserPublic;
 import com.example.backend.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +58,7 @@ public class BoardService {
 	}
 
     public Post createBoard(PostForCreate post) {
-		UserPublic user = userRepository.getOne(post.getAuthorId());
+		User user = userRepository.getOne(post.getAuthorId());
 		System.out.println(user.getNickName());
 		Post realPost = new Post();
 		realPost.setPostType(post.getPostType());

@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,6 +26,7 @@ public class User {
     @Column(name = "nickname")
     private String nickName;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 

@@ -60,7 +60,7 @@ public class Post {
 
 	@ManyToOne
 	@JoinColumn(name = "author_id")
-	private UserPublic user;
+	private User user;
 
 // ---Getter/Setter ---
 }
