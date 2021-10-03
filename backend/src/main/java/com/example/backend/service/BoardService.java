@@ -101,4 +101,17 @@ public class BoardService {
 	public Comment addComment(Comment comment){
 		return commentRepository.save(comment);
 	}
+
+	public ResponseEntity<Comment> updateComment(Integer id,Comment comment) {
+		comment.setId(id);
+		Comment com = commentRepository.save(comment);
+		return ResponseEntity.ok(com);
+	}
+
+	public ResponseEntity<Map<String, Boolean>> deleteComment(Integer commentId){
+		commentRepository.deleteById(commentId);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("Deleted Comment Data by id : ["+commentId+"]", Boolean.TRUE);
+		return ResponseEntity.ok(response);
+	}
 }

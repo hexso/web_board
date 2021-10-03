@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
-import com.example.backend.model.Comment;
 import com.example.backend.model.Multimedia;
 import com.example.backend.model.PostForCreate;
 import com.example.backend.service.MultimediaService;
