@@ -17,7 +17,7 @@ class ReadPosts extends Component {
         this.state = { 
             no: this.props.match.params.no,
             board: {},
-            comments:[{}]
+            comments:[{user:{nickName:''}}]
         }
         
         this.goToUpdate = this.goToUpdate.bind(this);
@@ -27,6 +27,7 @@ class ReadPosts extends Component {
     componentDidMount() {
         BoardService.getOneBoard(this.state.no).then( res => {
             this.setState({board: res.data});
+            this.setState({comments:res.data.commentSet})
         });
     }
 
