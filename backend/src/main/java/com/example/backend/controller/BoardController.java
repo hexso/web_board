@@ -71,15 +71,15 @@ public class BoardController {
 
 	@PutMapping("/board/{no}")
 	public ResponseEntity<Post> updateBoardByNo(
-			@PathVariable Integer id, @RequestBody Post post){
+			@PathVariable Integer no, @RequestBody Post post){
 		
-		return boardService.updateBoard(id, post);
+		return boardService.updateBoard(no, post);
 	}
 
 	@DeleteMapping("/board/{no}")
 	public ResponseEntity<Map<String, Boolean>> deleteBoardByNo(
-			@PathVariable Integer id) {
+			@PathVariable Integer no) {
 		
-		return boardService.deleteBoard(id);
+		return boardService.deleteBoard(no);
 	}
 }
