@@ -12,7 +12,7 @@ public class MultimediaService {
     @Autowired
     private MultimediaRepository multimediaRepository;
 
-    public Multimedia createMultimedia(Multimedia multimedia){
-        return multimediaRepository.save(multimedia);
+    public Multimedia createMultimedia(Integer postId, String type, String url){
+        return multimediaRepository.save(new Multimedia(postId, type, url));
     }
 }

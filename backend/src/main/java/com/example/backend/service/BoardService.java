@@ -30,7 +30,7 @@ public class BoardService {
 	}
 
 	// get paging boards data
-	public ResponseEntity<Map> getPagingBoard(Integer p_num) {
+	public Map getPagingBoard(Integer p_num) {
 		Map result = null;
 		
 		PagingUtil pu = new PagingUtil(p_num, 5, 5); // ($1:표시할 현재 페이지, $2:한페이지에 표시할 글 수, $3:한 페이지에 표시할 페이지 버튼의 수 )
@@ -49,7 +49,7 @@ public class BoardService {
 		result.put("pagingData", pu);
 		result.put("list", list);
 		
-		return ResponseEntity.ok(result);
+		return result;
 	}
 
 	// get boards data
@@ -69,13 +69,13 @@ public class BoardService {
 		return postRepository.save(realPost);
     }
 
-	public ResponseEntity<Post> getBoard(Integer id) {
+	public Post getBoard(Integer id) {
 		Post post = postRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
-		return ResponseEntity.ok(post);
+		return post;
 	}
 
-	public ResponseEntity<Post> updateBoard(
+	public Post updateBoard(
 			Integer id, Post updatedPost) {
 		Post post = postRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
@@ -85,10 +85,10 @@ public class BoardService {
 		post.setUpdatedTime(new Date());
 		
 		Post endUpdatedPost = postRepository.save(post);
-		return ResponseEntity.ok(endUpdatedPost);
+		return endUpdatedPost;
 	}
 
-	public ResponseEntity<Map<String, Boolean>> deleteBoard(
+	public Map<String, Boolean> deleteBoard(
 			Integer id) {
 		Post post = postRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Not exist Board Data by no : ["+id+"]"));
@@ -96,23 +96,23 @@ public class BoardService {
 		postRepository.delete(post);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("Deleted Board Data by id : ["+id+"]", Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		return response;
 	}
 
 	public Comment addComment(Comment comment){
 		return commentRepository.save(comment);
 	}
 
-	public ResponseEntity<Comment> updateComment(Integer id,Comment comment) {
+	public Comment updateComment(Integer id,Comment comment) {
 		comment.setId(id);
 		Comment com = commentRepository.save(comment);
-		return ResponseEntity.ok(com);
+		return com;
 	}
 
-	public ResponseEntity<Map<String, Boolean>> deleteComment(Integer commentId){
+	public Map<String, Boolean> deleteComment(Integer commentId){
 		commentRepository.deleteById(commentId);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("Deleted Comment Data by id : ["+commentId+"]", Boolean.TRUE);
-		return ResponseEntity.ok(response);
+		return response;
 	}
 }

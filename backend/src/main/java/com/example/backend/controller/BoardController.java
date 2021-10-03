@@ -34,52 +34,40 @@ public class BoardController {
 	@GetMapping("/board")
 	public ResponseEntity<Map> getAllBoards(@RequestParam(value = "p_num", required=false) Integer p_num) {
 		if (p_num == null || p_num <= 0) p_num = 1;
-		
-		return boardService.getPagingBoard(p_num);
+		return ResponseEntity.ok(boardService.getPagingBoard(p_num));
 	}
 
     @PostMapping("/board")
-    public Post createBoard(@RequestPart(value = "file", required=false) MultipartFile file, @RequestPart("body") PostForCreate post) throws IOException {
+    public ResponseEntity<Post> createBoard(@RequestPart(value = "file", required=false) MultipartFile file, @RequestPart("body") PostForCreate post) throws IOException {
 		MultipartFile multipartFile = file;
 		String url = "";
 		if (multipartFile != null) {
-			String fileName = multipartFile.getOriginalFilename();
-			Date time = new Date();
-			String nowTime = time.toString();
-			fileName += nowTime;
-
-			url = s3Service.upload(multipartFile, fileName);
+			url = s3Service.upload(multipartFile);
 		}
 		post.setImageUrl(url);
 		Post after_post = boardService.createBoard(post);
 		if (multipartFile != null) {
-			Multimedia multimedia = new Multimedia();
-			multimedia.setPostId(after_post.getId());
-			multimedia.setType(multipartFile.getContentType().toString());
-			multimedia.setUrl(url);
-			multimediaService.createMultimedia(multimedia);
+			multimediaService.createMultimedia(after_post.getId(), multipartFile.getContentType().toString(), url);
 		}
-		return after_post;
+		return ResponseEntity.ok(after_post);
     }
 
 	@GetMapping("/board/{no}")
 	public ResponseEntity<Post> getBoardByNo(
 			@PathVariable Integer no) {
-		
-		return boardService.getBoard(no);
+		return ResponseEntity.ok(boardService.getBoard(no));
 	}
 
 	@PutMapping("/board/{no}")
 	public ResponseEntity<Post> updateBoardByNo(
 			@PathVariable Integer no, @RequestBody Post post){
-		
-		return boardService.updateBoard(no, post);
+		return ResponseEntity.ok(boardService.updateBoard(no, post));
 	}
 
 	@DeleteMapping("/board/{no}")
 	public ResponseEntity<Map<String, Boolean>> deleteBoardByNo(
 			@PathVariable Integer no) {
 		
-		return boardService.deleteBoard(no);
+		return ResponseEntity.ok(boardService.deleteBoard(no));
 	}
 }

@@ -23,11 +23,11 @@ public class CommentController {
 
     @PutMapping("/comment/{id}")
     public ResponseEntity<Comment> updateCommentByNo(@PathVariable Integer id, @RequestBody Comment comment){
-        return boardService.updateComment(id, comment);
+        return ResponseEntity.ok(boardService.updateComment(id, comment));
     }
 
     @DeleteMapping("/comment/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteCommentByNo(@PathVariable Integer id) {
-        return boardService.deleteComment(id);
+        return ResponseEntity.ok(boardService.deleteComment(id));
     }
 }

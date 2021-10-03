@@ -44,7 +44,11 @@ public class S3Service {
                 .build();
     }
 
-    public String upload(MultipartFile file, String fileName) throws IOException{
+    public String upload(MultipartFile file) throws IOException{
+        String fileName = file.getOriginalFilename();
+        Date time = new Date();
+        String nowTime = time.toString();
+        fileName += nowTime;
         s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();

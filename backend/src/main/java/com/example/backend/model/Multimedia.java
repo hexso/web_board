@@ -29,4 +29,11 @@ public class Multimedia {
     @Column(name = "url")
     private String url;
 
+    public Multimedia(){}
+
+    public Multimedia(Integer postId, String type, String url){
+        this.postId = postId;
+        this.type = type;
+        this.url = url;
+    }
 }
