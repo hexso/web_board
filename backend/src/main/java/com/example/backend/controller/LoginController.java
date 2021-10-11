@@ -1,6 +1,6 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.LoginForm;
+import com.example.backend.dto.LoginFormDto;
 import com.example.backend.model.User;
 import com.example.backend.service.LoginService;
 import com.example.backend.util.SessionConstants;
@@ -21,8 +21,8 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginForm loginForm, HttpSession session) {
-        User user = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
+    public ResponseEntity login(@RequestBody LoginFormDto loginFormDto, HttpSession session) {
+        User user = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
         if (user == null) {
             return ResponseEntity.ok("fail");
         }
@@ -32,7 +32,7 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(@RequestBody LoginForm loginForm, HttpSession session) {
+    public ResponseEntity logout(@RequestBody LoginFormDto loginFormDto, HttpSession session) {
         if (session != null) {
             session.invalidate();
         }

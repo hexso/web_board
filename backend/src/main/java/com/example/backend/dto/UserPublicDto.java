@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class UserPublic {
+public class UserPublicDto {
 
     private Integer id;
 
@@ -21,13 +21,13 @@ public class UserPublic {
 
     private Integer authority;
 
-    public static UserPublic of(User user){
-        UserPublic userPublic = new UserPublic();
-        userPublic.id = user.getId();
-        userPublic.userName = user.getUserName();
-        userPublic.nickName = user.getNickName();
-        userPublic.profileUrl = user.getProfileUrl();
+    public static UserPublicDto of(User user){
+        UserPublicDto userPublicDto = new UserPublicDto();
+        userPublicDto.id = user.getId();
+        userPublicDto.userName = user.getUserName();
+        userPublicDto.nickName = user.getNickName();
+        userPublicDto.profileUrl = user.getProfileUrl();
 
-        return userPublic;
+        return userPublicDto;
     }
 }

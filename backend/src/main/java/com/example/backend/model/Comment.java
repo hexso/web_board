@@ -1,6 +1,5 @@
 package com.example.backend.model;
 
-import com.example.backend.dto.UserPublic;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;

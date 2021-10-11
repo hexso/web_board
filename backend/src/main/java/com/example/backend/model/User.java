@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -32,4 +33,8 @@ public class User {
 
     @Column(name = "profile_url")
     private String profileUrl;
+
+    @Column(name = "authority")
+    private Integer authority;
+
 }
