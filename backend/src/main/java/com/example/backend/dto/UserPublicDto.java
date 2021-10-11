@@ -19,6 +19,8 @@ public class UserPublic {
 
     private String profileUrl;
 
+    private Integer authority;
+
     public static UserPublic of(User user){
         UserPublic userPublic = new UserPublic();
         userPublic.id = user.getId();
