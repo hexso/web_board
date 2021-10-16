@@ -1,0 +1,64 @@
+[1mdiff --cc backend/src/main/java/com/example/backend/dto/TokenDto.java[m
+[1mindex c9a9da2,bedce03..0000000[m
+[1m--- a/backend/src/main/java/com/example/backend/dto/TokenDto.java[m
+[1m+++ b/backend/src/main/java/com/example/backend/dto/TokenDto.java[m
+[36m@@@ -1,5 -1,17 +1,21 @@@[m
+  package com.example.backend.dto;[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m +public class TokenDto {[m
+[32m +[m
+[32m++=======[m
+[32m+ import lombok.AllArgsConstructor;[m
+[32m+ import lombok.Builder;[m
+[32m+ import lombok.Getter;[m
+[32m+ import lombok.NoArgsConstructor;[m
+[32m+ [m
+[32m+ @Getter[m
+[32m+ @NoArgsConstructor[m
+[32m+ @AllArgsConstructor[m
+[32m+ @Builder[m
+[32m+ public class TokenDto {[m
+[32m+     private String grantType;[m
+[32m+     private String accessToken;[m
+[32m+     private String refreshToken;[m
+[32m+     private Long accessTokenExpiresIn;[m
+  }[m
+[1mdiff --cc backend/src/main/java/com/example/backend/util/TokenProvider.java[m
+[1mindex f369516,86b888a..0000000[m
+[1m--- a/backend/src/main/java/com/example/backend/util/TokenProvider.java[m
+[1m+++ b/backend/src/main/java/com/example/backend/util/TokenProvider.java[m
+[36m@@@ -1,15 -1,21 +1,33 @@@[m
+  package com.example.backend.util;[m
+  [m
+  import com.example.backend.dto.TokenDto;[m
+[32m++<<<<<<< HEAD[m
+[32m +import io.jsonwebtoken.Jwts;[m
+[32m +import io.jsonwebtoken.io.Decoders;[m
+[32m +import io.jsonwebtoken.security.Keys;[m
+[32m +import org.springframework.beans.factory.annotation.Value;[m
+[32m +import org.springframework.security.core.Authentication;[m
+[32m +import org.springframework.security.core.GrantedAuthority;[m
+[32m +import org.springframework.stereotype.Component;[m
+[32m +[m
+[32m +import java.security.Key;[m
+[32m++=======[m
+[32m+ import io.jsonwebtoken.*;[m
+[32m+ import io.jsonwebtoken.io.Decoders;[m
+[32m+ import io.jsonwebtoken.security.Keys;[m
+[32m+ import org.springframework.beans.factory.annotation.Value;[m
+[32m+ import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;[m
+[32m+ import org.springframework.security.core.Authentication;[m
+[32m+ import org.springframework.security.core.GrantedAuthority;[m
+[32m+ import org.springframework.security.core.authority.SimpleGrantedAuthority;[m
+[32m+ import org.springframework.security.core.userdetails.User;[m
+[32m+ import org.springframework.security.core.userdetails.UserDetails;[m
+[32m+ import org.springframework.stereotype.Component;[m
+[32m+ [m
+[32m+ import java.security.Key;[m
+[32m+ import java.util.Arrays;[m
+[32m+ import java.util.Collection;[m
+[32m++>>>>>>> cb763bfb4c0579326433f7ea683d30716b90f570[m
+  import java.util.Date;[m
+  import java.util.stream.Collectors;[m
+  [m

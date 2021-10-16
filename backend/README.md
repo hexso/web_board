@@ -2,7 +2,7 @@ CREATE TABLE `users` (
 `id` INT(11) NOT NULL AUTO_INCREMENT,
 `username` VARCHAR(30) NOT NULL COLLATE 'utf8mb4_general_ci',
 `nickname` VARCHAR(30) NOT NULL COLLATE 'utf8mb4_general_ci',
-`password` VARCHAR(45) NOT NULL COLLATE 'utf8mb4_general_ci',
+`password` VARCHAR(512) NOT NULL COLLATE 'utf8mb4_general_ci',
 `profile_url` VARCHAR(512) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 `authority` INT(11) NOT NULL DEFAULT '1',
 PRIMARY KEY (`id`) USING BTREE,

@@ -15,8 +15,4 @@ public class UserService {
     public User getUserInfo(String userName) {
         return userRepository.findByuserName(userName);
     }
-
-    public User getMyInfo() {
-        return userRepository.findById(SecurityUtil.getCurrentUserId());
-    }
 }

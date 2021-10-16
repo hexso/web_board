@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.LoginFormDto;
+import com.example.backend.dto.TokenDto;
 import com.example.backend.model.User;
 import com.example.backend.service.LoginService;
 import com.example.backend.util.SessionConstants;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/auth")
 public class LoginController {
 
     @Autowired
@@ -22,13 +23,11 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginFormDto loginFormDto, HttpSession session) {
-        User user = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
-        if (user == null) {
+        TokenDto tokenDto = loginService.login(loginFormDto.getLoginId(), loginFormDto.getPassword());
+        if (tokenDto == null) {
             return ResponseEntity.ok("fail");
         }
-        session.setAttribute(SessionConstants.LOGIN_USER, user.getUserName());
-
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(tokenDto);
     }
 
     @PostMapping("/logout")
@@ -37,5 +36,10 @@ public class LoginController {
             session.invalidate();
         }
         return ResponseEntity.ok("ok");
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity signup(@RequestBody LoginFormDto loginFormDto){
+        return ResponseEntity.ok(loginService.signup(loginFormDto));
     }
 }
