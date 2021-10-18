@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.backend.model.*;
+import com.example.backend.model.Repository.CommentRepository;
+import com.example.backend.model.Repository.PostRepository;
+import com.example.backend.model.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

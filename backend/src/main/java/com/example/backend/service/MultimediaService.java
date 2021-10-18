@@ -1,10 +1,9 @@
 package com.example.backend.service;
 
 import com.example.backend.model.Multimedia;
-import com.example.backend.model.MultimediaRepository;
+import com.example.backend.model.Repository.MultimediaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MultimediaService {
