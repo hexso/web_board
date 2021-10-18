@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.core.annotation.Order;
 
 @Setter
 @Getter
@@ -53,10 +52,12 @@ public class Post {
 	@Column(name = "type")
 	private String postType;
 
+	@Column(name = "top_image_url")
+	private String topImageUrl;
+
 	@ManyToOne
 	@JoinColumn(name = "author_id")
 	private User user;
 
 // ---Getter/Setter ---
-
 }

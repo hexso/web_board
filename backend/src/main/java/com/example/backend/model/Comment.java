@@ -22,8 +22,9 @@ public class Comment {
     @Column(name = "contents")
     private String contents;
 
-    @Column(name = "author_id")
-    private Integer authorId;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User user;
 
     @Column(name = "post_id")
     private Integer postId;

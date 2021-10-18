@@ -1,9 +1,10 @@
 package com.example.backend.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
@@ -13,6 +14,9 @@ import javax.persistence.*;
 @Table(name= "users")
 @DynamicInsert
 @DynamicUpdate
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -25,9 +29,13 @@ public class User {
     @Column(name = "nickname")
     private String nickName;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
     @Column(name = "profile_url")
     private String profileUrl;
+
+    @Column(name = "authority")
+    private Integer authority;
 }
