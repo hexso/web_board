@@ -63,7 +63,7 @@ class ReadPosts extends Component {
             BoardService.deleteBoard(this.state.no).then( res => {
                 console.log("delete result => "+ JSON.stringify(res));
                 if (res.status == 200) {
-                    this.props.history.push('/board');
+                    this.props.history.push('/blog-posts');
                 } else {
                     alert("글 삭제가 실패했습니다.");
                 }

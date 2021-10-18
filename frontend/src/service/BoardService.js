@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BOARD_API_BASE_URL = "http://localhost:8080/api/board"; 
+const LOGIN_API_BASE_URL = "http://localhost:8080/auth/login";
 
 class BoardService {
 
@@ -24,6 +25,9 @@ class BoardService {
         return axios.delete(BOARD_API_BASE_URL + "/" + no);
     }
 
+    login(loginForm) {
+        return axios.post(LOGIN_API_BASE_URL, loginForm);
+    }
 }
 
 export default new BoardService();
